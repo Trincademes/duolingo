@@ -1,0 +1,566 @@
+{
+  "users": [
+    {
+      "id": "admin-1",
+      "name": "Admin",
+      "email": "admin@duotech.com",
+      "passwordHash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+      "role": "admin",
+      "xp": 0,
+      "level": 1,
+      "streak": 0,
+      "lastStudyDate": null,
+      "achievements": [],
+      "notificationSettings": {
+        "enabled": true,
+        "dailyReminderTime": "19:00"
+      },
+      "createdAt": "2026-05-05T00:00:00.000Z"
+    },
+    {
+      "id": "264fce43-fa5f-4a3a-8235-6522fdb4959a",
+      "name": "Aluno Ranking",
+      "email": "student.1778023403163@example.com",
+      "passwordHash": "14f8f4bb8c0e79a02670a5fea5682da717a5b3d3dc7b1706f7a4bab9afae18c2",
+      "role": "student",
+      "xp": 40,
+      "level": 1,
+      "streak": 1,
+      "lastStudyDate": "2026-05-05T23:23:23.317Z",
+      "rankingOptIn": true,
+      "achievements": [],
+      "notificationSettings": {
+        "enabled": true,
+        "dailyReminderTime": "19:00"
+      },
+      "createdAt": "2026-05-05T23:23:23.258Z"
+    }
+  ],
+  "progress": [
+    {
+      "userId": "264fce43-fa5f-4a3a-8235-6522fdb4959a",
+      "courseId": "expo",
+      "currentModuleId": "expo-fundamentos",
+      "currentLessonId": "expo-components",
+      "xpAccumulated": 40,
+      "completedLessonIds": [
+        "expo-hello-world"
+      ],
+      "lessonHistory": [
+        {
+          "lessonId": "expo-hello-world",
+          "title": "Seu primeiro app",
+          "moduleId": "expo-fundamentos",
+          "score": 2,
+          "total": 3,
+          "accuracyRate": 0.6666666666666666,
+          "passed": true,
+          "completedAt": "2026-05-05T23:23:23.317Z"
+        }
+      ],
+      "errorLog": {
+        "expo-hello-1": {
+          "attempts": 1,
+          "errors": 1,
+          "reviewTags": [
+            "expo",
+            "setup",
+            "mobile-basics"
+          ]
+        },
+        "expo-hello-2": {
+          "attempts": 1,
+          "errors": 0,
+          "reviewTags": [
+            "expo",
+            "setup",
+            "mobile-basics"
+          ]
+        },
+        "expo-hello-3": {
+          "attempts": 1,
+          "errors": 0,
+          "reviewTags": [
+            "expo",
+            "setup",
+            "mobile-basics"
+          ]
+        }
+      },
+      "startedAt": "2026-05-05T23:23:23.287Z",
+      "updatedAt": "2026-05-05T23:23:23.317Z"
+    },
+    {
+      "userId": "264fce43-fa5f-4a3a-8235-6522fdb4959a",
+      "courseId": "aws",
+      "currentModuleId": "aws-cloud-iam",
+      "currentLessonId": "aws-cloud-basics",
+      "xpAccumulated": 0,
+      "completedLessonIds": [],
+      "lessonHistory": [],
+      "errorLog": {},
+      "startedAt": "2026-05-05T23:23:23.297Z",
+      "updatedAt": "2026-05-05T23:23:23.297Z"
+    }
+  ],
+  "studySessions": [
+    {
+      "id": "71bb9c8e-030e-4ad1-93b7-5efe569b03b8",
+      "userId": "264fce43-fa5f-4a3a-8235-6522fdb4959a",
+      "courseId": "expo",
+      "lessonId": "expo-hello-world",
+      "startedAt": "2026-05-05T23:21:23.316Z",
+      "submittedAt": "2026-05-05T23:23:23.317Z",
+      "durationSeconds": 120,
+      "passed": true,
+      "accuracyRate": 0.6666666666666666
+    }
+  ],
+  "recoveryRequests": [
+    {
+      "id": "9c8764f5-9a12-4e36-aa26-c8ca32795d9f",
+      "email": "student.1778023403163@example.com",
+      "token": "d2f7b210-a82e-446c-81d1-d8e5686e8353",
+      "createdAt": "2026-05-05T23:23:23.359Z",
+      "expiresAt": "2026-05-05T23:53:23.359Z",
+      "usedAt": "2026-05-05T23:23:23.366Z"
+    }
+  ],
+  "notificationsLog": [
+    {
+      "id": "937ced1d-991e-4cfd-b9bf-05b1de61dbec",
+      "type": "lesson-completed",
+      "userId": "264fce43-fa5f-4a3a-8235-6522fdb4959a",
+      "message": "Parabens! Voce concluiu Seu primeiro app.",
+      "createdAt": "2026-05-05T23:23:23.325Z"
+    }
+  ],
+  "catalog": [
+    {
+      "id": "expo",
+      "name": "Expo",
+      "description": "Aprenda a criar apps mobile com React Native e Expo em microlições práticas.",
+      "color": "#0f766e",
+      "modules": [
+        {
+          "id": "expo-fundamentos",
+          "title": "Fundamentos",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "expo-hello-world",
+              "title": "Seu primeiro app",
+              "order": 1,
+              "minCorrectAnswers": 2,
+              "xpReward": 40,
+              "explanation": "Expo acelera o desenvolvimento mobile com configuração mínima e feedback rápido.",
+              "reviewTags": [
+                "expo",
+                "setup",
+                "mobile-basics"
+              ],
+              "exercises": [
+                {
+                  "id": "expo-hello-1",
+                  "type": "multiple_choice",
+                  "prompt": "Qual é a principal vantagem do Expo no início do projeto?",
+                  "options": [
+                    "Evita toda a configuração nativa inicial",
+                    "Substitui JavaScript por Kotlin",
+                    "Impede publicar na loja",
+                    "Funciona apenas no iOS"
+                  ],
+                  "correctAnswer": "Evita toda a configuração nativa inicial",
+                  "explanation": "Expo reduz o atrito inicial e permite focar no produto."
+                },
+                {
+                  "id": "expo-hello-2",
+                  "type": "true_false",
+                  "prompt": "Expo Go permite testar rapidamente no dispositivo durante o desenvolvimento.",
+                  "options": [
+                    "Verdadeiro",
+                    "Falso"
+                  ],
+                  "correctAnswer": "Verdadeiro",
+                  "explanation": "Ele acelera a iteração local."
+                },
+                {
+                  "id": "expo-hello-3",
+                  "type": "order_steps",
+                  "prompt": "Ordene o fluxo básico para iniciar um app Expo.",
+                  "options": [
+                    "Criar projeto",
+                    "Executar app",
+                    "Editar a tela inicial"
+                  ],
+                  "correctAnswer": [
+                    "Criar projeto",
+                    "Editar a tela inicial",
+                    "Executar app"
+                  ],
+                  "explanation": "Você cria a base, ajusta a interface e então valida o resultado."
+                }
+              ]
+            },
+            {
+              "id": "expo-components",
+              "title": "Componentes essenciais",
+              "order": 2,
+              "minCorrectAnswers": 2,
+              "xpReward": 50,
+              "explanation": "Text, View, ScrollView e Pressable formam a base da composição de interfaces React Native.",
+              "reviewTags": [
+                "components",
+                "layout"
+              ],
+              "exercises": [
+                {
+                  "id": "expo-components-1",
+                  "type": "matching",
+                  "prompt": "Associe o componente ao seu papel.",
+                  "options": [
+                    {
+                      "left": "View",
+                      "right": "Container de layout"
+                    },
+                    {
+                      "left": "Text",
+                      "right": "Renderizar texto"
+                    },
+                    {
+                      "left": "Pressable",
+                      "right": "Capturar interação"
+                    }
+                  ],
+                  "correctAnswer": [
+                    {
+                      "left": "View",
+                      "right": "Container de layout"
+                    },
+                    {
+                      "left": "Text",
+                      "right": "Renderizar texto"
+                    },
+                    {
+                      "left": "Pressable",
+                      "right": "Capturar interação"
+                    }
+                  ],
+                  "explanation": "Cada componente cobre um comportamento específico de interface."
+                },
+                {
+                  "id": "expo-components-2",
+                  "type": "fill_code",
+                  "prompt": "Complete o JSX para exibir um texto na tela.",
+                  "snippet": "<_____>Olá Expo</_____>",
+                  "options": [
+                    "Text",
+                    "View",
+                    "Image",
+                    "Button"
+                  ],
+                  "correctAnswer": "Text",
+                  "explanation": "Texto em React Native deve ser renderizado dentro de Text."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "expo-navigation",
+          "title": "Navegação e APIs",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "expo-navigation-basics",
+              "title": "Fluxo entre telas",
+              "order": 1,
+              "minCorrectAnswers": 2,
+              "xpReward": 60,
+              "explanation": "Navegação cria fluxos previsíveis para onboarding, trilhas e perfil.",
+              "reviewTags": [
+                "navigation",
+                "ux"
+              ],
+              "exercises": [
+                {
+                  "id": "expo-navigation-1",
+                  "type": "multiple_choice",
+                  "prompt": "Qual cenário combina melhor com pilha de navegação?",
+                  "options": [
+                    "Entrar em uma lição e voltar para a trilha",
+                    "Animar um ícone estático",
+                    "Persistir dados localmente",
+                    "Gerar uma imagem"
+                  ],
+                  "correctAnswer": "Entrar em uma lição e voltar para a trilha",
+                  "explanation": "Fluxos sequenciais entre telas se encaixam em stack."
+                },
+                {
+                  "id": "expo-navigation-2",
+                  "type": "true_false",
+                  "prompt": "A navegação ajuda a manter contexto de progresso no app.",
+                  "options": [
+                    "Verdadeiro",
+                    "Falso"
+                  ],
+                  "correctAnswer": "Verdadeiro",
+                  "explanation": "Ela organiza o percurso do usuário."
+                }
+              ]
+            },
+            {
+              "id": "expo-storage-build",
+              "title": "Armazenamento e build",
+              "order": 2,
+              "minCorrectAnswers": 2,
+              "xpReward": 70,
+              "explanation": "Persistência local e publicação fazem parte da maturidade do app.",
+              "reviewTags": [
+                "storage",
+                "deploy"
+              ],
+              "exercises": [
+                {
+                  "id": "expo-storage-1",
+                  "type": "multiple_choice",
+                  "prompt": "Qual dado vale persistir localmente neste produto?",
+                  "options": [
+                    "Token de sessão e preferências do usuário",
+                    "Senha em texto puro",
+                    "Código-fonte do app",
+                    "Log completo do servidor"
+                  ],
+                  "correctAnswer": "Token de sessão e preferências do usuário",
+                  "explanation": "Sessão e preferências precisam sobreviver ao fechamento do app."
+                },
+                {
+                  "id": "expo-storage-2",
+                  "type": "true_false",
+                  "prompt": "Build e deploy fazem parte do ciclo de entrega do app.",
+                  "options": [
+                    "Verdadeiro",
+                    "Falso"
+                  ],
+                  "correctAnswer": "Verdadeiro",
+                  "explanation": "A publicação é a última etapa para colocar o produto nas mãos do usuário."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aws",
+      "name": "AWS Nuvem",
+      "description": "Aprenda computação em nuvem com foco em serviços essenciais da AWS.",
+      "color": "#b45309",
+      "modules": [
+        {
+          "id": "aws-cloud-iam",
+          "title": "Cloud e IAM",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "aws-cloud-basics",
+              "title": "Conceitos de cloud",
+              "order": 1,
+              "minCorrectAnswers": 2,
+              "xpReward": 40,
+              "explanation": "Cloud oferece elasticidade, disponibilidade e pagamento sob demanda.",
+              "reviewTags": [
+                "cloud",
+                "aws-basics"
+              ],
+              "exercises": [
+                {
+                  "id": "aws-cloud-1",
+                  "type": "multiple_choice",
+                  "prompt": "Qual benefício é típico de cloud computing?",
+                  "options": [
+                    "Escalar conforme demanda",
+                    "Comprar servidor físico para cada experimento",
+                    "Evitar monitoramento",
+                    "Remover autenticação"
+                  ],
+                  "correctAnswer": "Escalar conforme demanda",
+                  "explanation": "Elasticidade é uma das principais vantagens da nuvem."
+                },
+                {
+                  "id": "aws-cloud-2",
+                  "type": "true_false",
+                  "prompt": "Cloud permite reduzir o investimento inicial em infraestrutura.",
+                  "options": [
+                    "Verdadeiro",
+                    "Falso"
+                  ],
+                  "correctAnswer": "Verdadeiro",
+                  "explanation": "O modelo sob demanda reduz custos iniciais."
+                }
+              ]
+            },
+            {
+              "id": "aws-iam-basics",
+              "title": "IAM",
+              "order": 2,
+              "minCorrectAnswers": 2,
+              "xpReward": 50,
+              "explanation": "IAM controla quem pode acessar quais recursos e com quais permissões.",
+              "reviewTags": [
+                "iam",
+                "security"
+              ],
+              "exercises": [
+                {
+                  "id": "aws-iam-1",
+                  "type": "matching",
+                  "prompt": "Associe o item do IAM ao conceito.",
+                  "options": [
+                    {
+                      "left": "User",
+                      "right": "Identidade individual"
+                    },
+                    {
+                      "left": "Policy",
+                      "right": "Conjunto de permissões"
+                    },
+                    {
+                      "left": "Role",
+                      "right": "Permissão assumível"
+                    }
+                  ],
+                  "correctAnswer": [
+                    {
+                      "left": "User",
+                      "right": "Identidade individual"
+                    },
+                    {
+                      "left": "Policy",
+                      "right": "Conjunto de permissões"
+                    },
+                    {
+                      "left": "Role",
+                      "right": "Permissão assumível"
+                    }
+                  ],
+                  "explanation": "Esses blocos compõem o controle de acesso na AWS."
+                },
+                {
+                  "id": "aws-iam-2",
+                  "type": "multiple_choice",
+                  "prompt": "Qual boa prática é recomendada no IAM?",
+                  "options": [
+                    "Princípio do menor privilégio",
+                    "Permitir tudo para acelerar",
+                    "Compartilhar a mesma senha",
+                    "Usar root em todas as tarefas"
+                  ],
+                  "correctAnswer": "Princípio do menor privilégio",
+                  "explanation": "Acesso mínimo reduz risco e impacto."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "aws-services",
+          "title": "Serviços essenciais",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "aws-storage-compute",
+              "title": "S3 e EC2",
+              "order": 1,
+              "minCorrectAnswers": 2,
+              "xpReward": 60,
+              "explanation": "S3 armazena objetos; EC2 fornece computação escalável.",
+              "reviewTags": [
+                "s3",
+                "ec2"
+              ],
+              "exercises": [
+                {
+                  "id": "aws-services-1",
+                  "type": "multiple_choice",
+                  "prompt": "Qual serviço é mais adequado para armazenar arquivos estáticos?",
+                  "options": [
+                    "S3",
+                    "EC2",
+                    "Lambda",
+                    "IAM"
+                  ],
+                  "correctAnswer": "S3",
+                  "explanation": "S3 é o serviço de armazenamento de objetos da AWS."
+                },
+                {
+                  "id": "aws-services-2",
+                  "type": "order_steps",
+                  "prompt": "Ordene um fluxo simples para publicar um arquivo.",
+                  "options": [
+                    "Criar bucket",
+                    "Enviar objeto",
+                    "Definir política de acesso"
+                  ],
+                  "correctAnswer": [
+                    "Criar bucket",
+                    "Enviar objeto",
+                    "Definir política de acesso"
+                  ],
+                  "explanation": "Primeiro criamos o bucket, depois enviamos e configuramos acesso."
+                }
+              ]
+            },
+            {
+              "id": "aws-serverless-data",
+              "title": "Lambda, API Gateway e DynamoDB",
+              "order": 2,
+              "minCorrectAnswers": 2,
+              "xpReward": 70,
+              "explanation": "Lambda executa código sob demanda; API Gateway expõe endpoints; DynamoDB persiste dados em escala.",
+              "reviewTags": [
+                "lambda",
+                "api-gateway",
+                "dynamodb"
+              ],
+              "exercises": [
+                {
+                  "id": "aws-serverless-1",
+                  "type": "multiple_choice",
+                  "prompt": "Qual combinação forma uma API serverless?",
+                  "options": [
+                    "API Gateway + Lambda + DynamoDB",
+                    "S3 + IAM + CloudWatch",
+                    "EC2 + FTP + root",
+                    "Lambda + Photoshop + CDN"
+                  ],
+                  "correctAnswer": "API Gateway + Lambda + DynamoDB",
+                  "explanation": "Essa tríade é comum em backends serverless."
+                },
+                {
+                  "id": "aws-serverless-2",
+                  "type": "true_false",
+                  "prompt": "Lambda cobra apenas pelo tempo de execução utilizado.",
+                  "options": [
+                    "Verdadeiro",
+                    "Falso"
+                  ],
+                  "correctAnswer": "Verdadeiro",
+                  "explanation": "O modelo é orientado a consumo."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9a5e494c-10cc-4197-86d7-39b321494252",
+      "name": "Tmp Course",
+      "description": "tmp",
+      "color": "#123456",
+      "archivedAt": "2026-05-05T23:23:23.417Z",
+      "modules": []
+    }
+  ]
+}

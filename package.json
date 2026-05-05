@@ -1,0 +1,16 @@
+{
+  "name": "duolingo-tech-platform",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm --workspace apps/api run dev",
+    "dev:admin": "npm --workspace apps/admin run dev",
+    "dev:mobile": "npm --workspace apps/mobile run start",
+    "lint": "npm --workspace apps/api run lint && npm --workspace apps/admin run lint && npm --workspace apps/mobile run lint"
+  }
+}
+
