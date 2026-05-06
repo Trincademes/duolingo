@@ -311,6 +311,14 @@ O projeto cobre o escopo funcional pedido no enunciado:
 - notificacoes
 - relatorios
 
+## Integrantes
+
+- Pedro Vieira
+- Murilo Antunes
+- Gizela Piere
+- Juan Abner
+- Matheus Pulcinelli
+
 ## Autor / contexto
 
 Projeto desenvolvido para trabalho academico inspirado no Duolingo, com foco em ensino de tecnologia por trilhas curtas e gamificadas.
