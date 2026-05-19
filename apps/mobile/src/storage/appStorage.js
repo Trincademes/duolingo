@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const STORAGE_KEY = "expo-duo-mobile-mvp";
 
 export const INITIAL_STATE = {
+  token: "",
   user: {
     name: "Pedro",
     email: "",
@@ -22,7 +23,7 @@ export const INITIAL_STATE = {
 
 export async function loadProgress() {
   const cached = await AsyncStorage.getItem(STORAGE_KEY);
-  return cached ? JSON.parse(cached) : INITIAL_STATE;
+  return cached ? { ...INITIAL_STATE, ...JSON.parse(cached) } : INITIAL_STATE;
 }
 
 export async function saveProgress(progress) {

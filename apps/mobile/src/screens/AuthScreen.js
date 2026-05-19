@@ -3,7 +3,9 @@ import { StatusBar } from "expo-status-bar";
 import { BrandMark, Field, PrimaryButton } from "../components/ui";
 import { styles } from "../styles";
 
-export function AuthScreen({ authForm, message, setAuthForm, onEnter }) {
+export function AuthScreen({ authForm, authMode, message, setAuthForm, setAuthMode, onEnter }) {
+  const isRegister = authMode === "register";
+
   return (
     <SafeAreaView style={styles.authSafeArea}>
       <StatusBar style="dark" />
@@ -17,13 +19,15 @@ export function AuthScreen({ authForm, message, setAuthForm, onEnter }) {
         </View>
 
         <View style={styles.authPanel}>
-          <Text style={styles.panelTitle}>Comecar MVP mobile</Text>
-          <Field
-            autoCapitalize="words"
-            label="Nome"
-            value={authForm.name}
-            onChangeText={(value) => setAuthForm((current) => ({ ...current, name: value }))}
-          />
+          <Text style={styles.panelTitle}>{isRegister ? "Criar conta" : "Entrar"}</Text>
+          {isRegister ? (
+            <Field
+              autoCapitalize="words"
+              label="Nome"
+              value={authForm.name}
+              onChangeText={(value) => setAuthForm((current) => ({ ...current, name: value }))}
+            />
+          ) : null}
           <Field
             autoCapitalize="none"
             keyboardType="email-address"
@@ -31,10 +35,29 @@ export function AuthScreen({ authForm, message, setAuthForm, onEnter }) {
             value={authForm.email}
             onChangeText={(value) => setAuthForm((current) => ({ ...current, email: value }))}
           />
-          {message ? <Text style={styles.errorText}>{message}</Text> : null}
-          <PrimaryButton label="Entrar na trilha Expo" onPress={onEnter} />
+          <Field
+            autoCapitalize="none"
+            label="Senha"
+            secureTextEntry
+            value={authForm.password}
+            onChangeText={(value) => setAuthForm((current) => ({ ...current, password: value }))}
+          />
+          {message ? <Text style={styles.messageText}>{message}</Text> : null}
+          <PrimaryButton label={isRegister ? "Cadastrar e entrar" : "Entrar na trilha"} onPress={onEnter} />
+          <PrimaryButton
+            label={isRegister ? "Ja tenho conta" : "Criar nova conta"}
+            secondary
+            onPress={() => {
+              setAuthMode(isRegister ? "login" : "register");
+              clearPassword(setAuthForm);
+            }}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
   );
+}
+
+function clearPassword(setAuthForm) {
+  setAuthForm((current) => ({ ...current, password: "" }));
 }

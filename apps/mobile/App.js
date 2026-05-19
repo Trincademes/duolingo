@@ -8,6 +8,7 @@ import { LessonScreen } from "./src/screens/LessonScreen";
 import { PathScreen } from "./src/screens/PathScreen";
 import { PracticeScreen } from "./src/screens/PracticeScreen";
 import { ProfileScreen } from "./src/screens/ProfileScreen";
+import { getRanking, login, register, syncStats, updateProfile } from "./src/services/api";
 import { configureNotifications, scheduleDailyReminder } from "./src/services/notifications";
 import { clearProgress, INITIAL_STATE, loadProgress, saveProgress } from "./src/storage/appStorage";
 import { styles } from "./src/styles";
@@ -66,7 +67,9 @@ class AppErrorBoundary extends Component {
 function AppContent() {
   const [appState, setAppState] = useState(INITIAL_STATE);
   const [authReady, setAuthReady] = useState(false);
-  const [authForm, setAuthForm] = useState({ name: "", email: "" });
+  const [authForm, setAuthForm] = useState({ name: "", email: "", password: "" });
+  const [authMode, setAuthMode] = useState("login");
+  const [ranking, setRanking] = useState([]);
   const [tab, setTab] = useState("path");
   const [activeLessonId, setActiveLessonId] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -98,6 +101,12 @@ function AppContent() {
     saveProgress(appState).catch(() => {});
   }, [appState, authReady]);
 
+  useEffect(() => {
+    if (tab === "profile" && appState.token && appState.user.rankingOptIn) {
+      refreshRanking(appState.token);
+    }
+  }, [tab, appState.token, appState.user.rankingOptIn]);
+
   const activeLesson = useMemo(() => findLesson(activeLessonId), [activeLessonId]);
   const currentExercise = activeLesson?.exercises[currentIndex] ?? null;
   const achievements = getAchievements(appState);
@@ -105,24 +114,40 @@ function AppContent() {
   const nextLesson = getNextLesson(appState.completedLessons);
   const reviewItems = getReviewItems(appState);
 
-  function handleEnter() {
+  async function handleEnter() {
     const name = authForm.name.trim() || "Aluno Expo";
     const email = authForm.email.trim();
+    const password = authForm.password;
 
     if (!email) {
-      setMessage("Informe um email para entrar no MVP.");
+      setMessage("Informe um email para entrar.");
       return;
     }
 
-    setAppState((current) => ({
-      ...current,
-      user: {
-        ...current.user,
-        name,
-        email
-      }
-    }));
-    setMessage("");
+    if (!password || password.length < 6) {
+      setMessage("Informe uma senha com pelo menos 6 caracteres.");
+      return;
+    }
+
+    try {
+      const session = authMode === "register"
+        ? await register({ name, email, password })
+        : await login({ email, password });
+
+      setAppState((current) => ({
+        ...current,
+        token: session.token,
+        user: {
+          ...current.user,
+          ...session.user
+        }
+      }));
+      setAuthForm({ name: "", email: "", password: "" });
+      setMessage("");
+      refreshRanking(session.token);
+    } catch (error) {
+      setMessage(error.message);
+    }
   }
 
   function openLesson(lessonId) {
@@ -193,10 +218,54 @@ function AppContent() {
     }
 
     const score = scoreLesson(activeLesson, answers, appState.completedLessons);
+    const nextState = completeLesson(appState, activeLesson, score);
 
-    setAppState((current) => completeLesson(current, activeLesson, score));
+    setAppState(nextState);
     setResult(score);
     setFeedback(null);
+
+    if (nextState.token) {
+      syncStats(nextState.token, nextState.user)
+        .then((user) => {
+          setAppState((current) => ({ ...current, user: { ...current.user, ...user } }));
+          if (nextState.user.rankingOptIn) {
+            refreshRanking(nextState.token);
+          }
+        })
+        .catch(() => setMessage("Progresso salvo localmente. A API nao respondeu agora."));
+    }
+  }
+
+  async function refreshRanking(token = appState.token) {
+    try {
+      const items = await getRanking(token);
+      setRanking(items);
+    } catch (_error) {
+      setRanking([]);
+    }
+  }
+
+  async function saveRankingOptIn(value) {
+    const nextUser = { ...appState.user, rankingOptIn: value };
+    setAppState((current) => ({ ...current, user: nextUser }));
+
+    if (!appState.token) {
+      return;
+    }
+
+    try {
+      const user = await updateProfile(appState.token, { rankingOptIn: value });
+      setAppState((current) => ({ ...current, user: { ...current.user, ...user } }));
+
+      if (value) {
+        await syncStats(appState.token, nextUser);
+        refreshRanking(appState.token);
+      } else {
+        setRanking([]);
+      }
+    } catch (_error) {
+      setMessage("Nao foi possivel atualizar o ranking na API.");
+    }
   }
 
   async function saveNotification(nextNotification = appState.notification) {
@@ -213,7 +282,7 @@ function AppContent() {
   async function resetProgress() {
     await clearProgress();
     setAppState(INITIAL_STATE);
-    setAuthForm({ name: "", email: "" });
+    setAuthForm({ name: "", email: "", password: "" });
     setActiveLessonId(null);
     setTab("path");
     setMessage("");
@@ -230,12 +299,14 @@ function AppContent() {
     );
   }
 
-  if (!appState.user.email) {
+  if (!appState.token || !appState.user.email) {
     return (
       <AuthScreen
         authForm={authForm}
+        authMode={authMode}
         message={message}
         setAuthForm={setAuthForm}
+        setAuthMode={setAuthMode}
         onEnter={handleEnter}
       />
     );
@@ -286,9 +357,10 @@ function AppContent() {
           {tab === "profile" ? (
             <ProfileScreen
               appState={appState}
-              setAppState={setAppState}
+              ranking={ranking}
               onReset={() => confirmReset(resetProgress)}
               onSaveNotification={saveNotification}
+              onSaveRankingOptIn={saveRankingOptIn}
             />
           ) : null}
         </ScrollView>

@@ -89,7 +89,8 @@ O projeto foi estruturado como monorepo com tres frentes:
 
 ### Persistencia
 
-- JSON file database em `apps/api/data/db.json`
+- JSON file database em `apps/api/data/db.json` para desenvolvimento local
+- DynamoDB opcional na AWS para usuarios, progresso e ranking
 
 ## Arquitetura
 
@@ -151,6 +152,9 @@ Arquivo: `apps/api/.env`
 ```env
 PORT=3333
 JWT_SECRET=duolingo-tech-secret
+STORE_DRIVER=json
+AWS_REGION=us-east-1
+AWS_DYNAMODB_TABLE=duotech-app-state
 ```
 
 #### Admin web
@@ -279,6 +283,7 @@ Administrador seedado no banco:
 - A persistencia atual e em arquivo JSON para simplificar a avaliacao academica e a execucao local.
 - O projeto foi preparado para demonstracao funcional, nao para producao.
 - O mobile usa `EXPO_PUBLIC_API_URL`, entao se voce testar em celular fisico talvez precise trocar `localhost` pelo IP da maquina.
+- Para persistir na AWS, crie a tabela DynamoDB descrita em `infra/aws/dynamodb.yml` e use `STORE_DRIVER=dynamodb`.
 
 Exemplo:
 
