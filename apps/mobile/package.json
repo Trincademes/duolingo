@@ -7,7 +7,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "lint": "node --check index.js && node --check App.js && node --check src/components/AppChrome.js && node --check src/components/ui.js && node --check src/data/expoCourse.js && node --check src/screens/AuthScreen.js && node --check src/screens/LessonScreen.js && node --check src/screens/PathScreen.js && node --check src/screens/PracticeScreen.js && node --check src/screens/ProfileScreen.js && node --check src/services/notifications.js && node --check src/storage/appStorage.js && node --check src/styles.js && node --check src/theme.js && node --check src/utils/progress.js"
+    "lint": "node --check index.js && node --check App.js && node --check metro.config.js && node --check src/components/AppChrome.js && node --check src/components/ui.js && node --check src/data/expoCourse.js && node --check src/screens/AuthScreen.js && node --check src/screens/LessonScreen.js && node --check src/screens/PathScreen.js && node --check src/screens/PracticeScreen.js && node --check src/screens/ProfileScreen.js && node --check src/services/api.js && node --check src/services/notifications.js && node --check src/storage/appStorage.js && node --check src/styles.js && node --check src/theme.js && node --check src/utils/progress.js"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
@@ -15,8 +15,8 @@
     "expo": "~54.0.0",
     "expo-notifications": "~0.32.17",
     "expo-status-bar": "~3.0.9",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "react-native-web": "^0.21.0"
   },

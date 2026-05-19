@@ -1,5 +1,6 @@
 import express from "express";
 import { requireAuth } from "../middleware.js";
+import { syncUserStats } from "../services/authService.js";
 import {
   createReviewSession,
   getDashboard,
@@ -125,6 +126,15 @@ studentRouter.put("/me/notifications", requireAuth, async (request, response) =>
 studentRouter.get("/ranking", requireAuth, async (_request, response) => {
   try {
     const data = await getRanking();
+    sendSuccess(response, data);
+  } catch (error) {
+    sendError(response, error);
+  }
+});
+
+studentRouter.put("/me/stats", requireAuth, async (request, response) => {
+  try {
+    const data = await syncUserStats(request.user.id, request.body);
     sendSuccess(response, data);
   } catch (error) {
     sendError(response, error);

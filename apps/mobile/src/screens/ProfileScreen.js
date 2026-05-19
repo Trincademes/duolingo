@@ -2,7 +2,7 @@ import { Switch, Text, View } from "react-native";
 import { PrimaryButton } from "../components/ui";
 import { styles } from "../styles";
 
-export function ProfileScreen({ appState, onReset, onSaveNotification, setAppState }) {
+export function ProfileScreen({ appState, ranking, onReset, onSaveNotification, onSaveRankingOptIn }) {
   const notification = appState.notification;
 
   return (
@@ -22,16 +22,11 @@ export function ProfileScreen({ appState, onReset, onSaveNotification, setAppSta
         <View style={styles.switchRow}>
           <View style={styles.flex}>
             <Text style={styles.switchTitle}>Ranking opcional</Text>
-            <Text style={styles.mutedText}>Mostra seu XP em uma lista local de demonstracao.</Text>
+            <Text style={styles.mutedText}>Mostra seu XP no ranking salvo pela API.</Text>
           </View>
           <Switch
             value={appState.user.rankingOptIn}
-            onValueChange={(value) =>
-              setAppState((current) => ({
-                ...current,
-                user: { ...current.user, rankingOptIn: value }
-              }))
-            }
+            onValueChange={onSaveRankingOptIn}
           />
         </View>
 
@@ -51,13 +46,8 @@ export function ProfileScreen({ appState, onReset, onSaveNotification, setAppSta
 
       {appState.user.rankingOptIn ? (
         <View style={styles.sectionPanel}>
-          <Text style={styles.sectionTitle}>Ranking demo</Text>
-          {[
-            { name: appState.user.name, xp: appState.user.xp },
-            { name: "Ana", xp: 120 },
-            { name: "Bruno", xp: 80 }
-          ]
-            .sort((left, right) => right.xp - left.xp)
+          <Text style={styles.sectionTitle}>Ranking de lideres</Text>
+          {(ranking.length > 0 ? ranking : [{ name: appState.user.name, xp: appState.user.xp, level: appState.user.level }])
             .map((item, index) => (
               <View key={`${item.name}-${item.xp}`} style={styles.rankingRow}>
                 <Text style={styles.rankingPlace}>{index + 1}</Text>

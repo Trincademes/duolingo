@@ -138,6 +138,45 @@ export async function updateProfile(userId, payload) {
   return sanitizeUser(user);
 }
 
+export async function syncUserStats(userId, payload) {
+  const db = await updateDb((draft) => {
+    const user = draft.users.find((item) => item.id === userId);
+
+    if (!user) {
+      throw new Error("Usuario nao encontrado.");
+    }
+
+    const xp = Number(payload.xp);
+    const level = Number(payload.level);
+    const streak = Number(payload.streak);
+
+    if (Number.isFinite(xp) && xp >= 0) {
+      user.xp = Math.floor(xp);
+    }
+
+    if (Number.isFinite(level) && level >= 1) {
+      user.level = Math.floor(level);
+    }
+
+    if (Number.isFinite(streak) && streak >= 0) {
+      user.streak = Math.floor(streak);
+    }
+
+    if (payload.lastStudyDate) {
+      user.lastStudyDate = payload.lastStudyDate;
+    }
+
+    if (typeof payload.rankingOptIn === "boolean") {
+      user.rankingOptIn = payload.rankingOptIn;
+    }
+
+    return draft;
+  });
+
+  const user = db.users.find((item) => item.id === userId);
+  return sanitizeUser(user);
+}
+
 export async function findUserById(userId) {
   const db = await readDb();
   const user = db.users.find((item) => item.id === userId) ?? null;
