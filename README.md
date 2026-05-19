@@ -322,6 +322,7 @@ O projeto cobre o escopo funcional pedido no enunciado:
 - Murilo Antunes
 - Gizela Piere
 - Juan Abner
+- Julio Coronetti
 - Matheus Pulcinelli
 
 ## Autor / contexto
