@@ -1,6 +1,7 @@
 const API_URL = process.env.EXPO_PUBLIC_API_URL ?? "http://localhost:3333";
 
 async function request(path, { body, method = "GET", token } = {}) {
+  // Wrapper unico para manter headers, token JWT e tratamento de erro padronizados.
   const response = await fetch(`${API_URL}${path}`, {
     method,
     headers: {
@@ -44,6 +45,7 @@ export function updateProfile(token, payload) {
 }
 
 export function syncStats(token, user) {
+  // Envia somente os campos de progresso que a API pode persistir.
   return request("/me/stats", {
     method: "PUT",
     token,

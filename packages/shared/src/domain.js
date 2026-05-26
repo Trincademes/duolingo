@@ -1,5 +1,6 @@
 import { ACHIEVEMENTS, COURSES } from "./content.js";
 
+// Este pacote concentra regras compartilhadas entre API e clientes.
 function resolveCatalog(catalog) {
   return catalog ?? COURSES;
 }
@@ -120,6 +121,7 @@ export function calculateLevel(xp) {
 }
 
 export function evaluateExercise(exercise, answer) {
+  // Exercicios compostos comparam arrays/objetos; exercicios simples usam igualdade direta.
   if (exercise.type === "order_steps") {
     return JSON.stringify(answer) === JSON.stringify(exercise.correctAnswer);
   }
@@ -251,6 +253,7 @@ export function mergeLessonProgress({
   catalog,
   studyDate = new Date().toISOString()
 }) {
+  // Consolida uma submissao de licao em progresso, XP, streak, erros e conquistas.
   const normalizedUser = normalizeUserRecord(user);
   const completedLessonIds = submission.passed && !progress.completedLessonIds.includes(lesson.id)
     ? [...progress.completedLessonIds, lesson.id]
@@ -382,6 +385,7 @@ export function calculateModuleProgress(courseId, progress, catalog) {
 }
 
 export function buildReviewSuggestions(progress) {
+  // A revisao adaptativa prioriza exercicios com maior taxa de erro.
   return Object.entries(progress.errorLog)
     .map(([exerciseId, stats]) => ({
       exerciseId,
@@ -531,6 +535,7 @@ function calculateAverageDailyUseMinutes(studySessions) {
 }
 
 export function buildUsageReport(users, progressList, catalog, studySessions = []) {
+  // KPIs consumidos pelo painel administrativo.
   const normalizedUsers = users.map((user) => hydrateUserState(user));
   const today = toUtcDateKey(new Date().toISOString());
   const totalUsers = normalizedUsers.length;

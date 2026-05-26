@@ -11,6 +11,7 @@ function stampArchive(entity) {
 }
 
 async function ensureCatalog() {
+  // O catalogo editavel nasce do pacote compartilhado e depois fica salvo no banco.
   return updateDb((draft) => {
     if (!draft.catalog) {
       draft.catalog = cloneCoursesFromShared();
@@ -62,6 +63,7 @@ export async function deleteCourse(courseId) {
     throw new Error("Curso nao encontrado.");
   }
 
+  // Arquivar preserva historico e progresso ja gravados dos alunos.
   stampArchive(course);
   await updateDb(() => db);
   return { success: true, archived: true };

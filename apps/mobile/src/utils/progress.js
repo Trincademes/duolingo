@@ -1,5 +1,6 @@
 import { EXPO_LESSONS } from "../data/expoCourse";
 
+// Regras locais de progresso usadas pelo MVP mobile mesmo sem conexao constante.
 export function findLesson(lessonId) {
   return EXPO_LESSONS.find((lesson) => lesson.id === lessonId) ?? null;
 }
@@ -31,6 +32,7 @@ export function isCorrect(exercise, answer) {
 }
 
 export function scoreLesson(lesson, answers, completedLessons) {
+  // Recalcula a pontuacao a partir das respostas atuais, sem confiar em estado visual.
   const checks = lesson.exercises.map((exercise) => ({
     exercise,
     answer: answers[exercise.id],
@@ -53,6 +55,7 @@ export function scoreLesson(lesson, answers, completedLessons) {
 }
 
 export function completeLesson(current, lesson, score) {
+  // Aplica XP, streak, historico e revisao em uma unica transicao de estado.
   const today = toDateKey(new Date());
   const streak = score.passed ? nextStreak(current.user.streak, current.user.lastStudyDate, today) : current.user.streak;
   const completedLessons = score.passed && !current.completedLessons.includes(lesson.id)

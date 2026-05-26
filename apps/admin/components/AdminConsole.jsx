@@ -23,6 +23,7 @@ export function AdminConsole({ initialTab = "overview" }) {
   const [courseDraft, setCourseDraft] = useState(defaultCourse);
 
   useEffect(() => {
+    // Depois do login, o painel carrega catalogo e relatorios em uma unica atualizacao.
     if (session?.token) {
       refresh(session.token).catch((error) => setMessage(error.message));
     }
@@ -64,6 +65,7 @@ export function AdminConsole({ initialTab = "overview" }) {
   }
 
   async function mutate(action, successMessage = "Catalogo atualizado.") {
+    // Centraliza a sequencia comum de alterar dados, recarregar tela e exibir feedback.
     try {
       await action();
       await refresh(session.token);
@@ -95,11 +97,20 @@ export function AdminConsole({ initialTab = "overview" }) {
           <form className="stack" onSubmit={handleLogin}>
             <label className="field">
               <span>Email</span>
-              <input value={credentials.email} onChange={(event) => setCredentials((current) => ({ ...current, email: event.target.value }))} />
+              <input
+                value={credentials.email}
+                onChange={(event) =>
+                  setCredentials((current) => ({ ...current, email: event.target.value }))}
+              />
             </label>
             <label className="field">
               <span>Senha</span>
-              <input type="password" value={credentials.password} onChange={(event) => setCredentials((current) => ({ ...current, password: event.target.value }))} />
+              <input
+                type="password"
+                value={credentials.password}
+                onChange={(event) =>
+                  setCredentials((current) => ({ ...current, password: event.target.value }))}
+              />
             </label>
             <button className="btn btn-primary" type="submit">Entrar</button>
           </form>
@@ -169,15 +180,27 @@ export function AdminConsole({ initialTab = "overview" }) {
                   <form className="grid grid-2" onSubmit={handleCreateCourse}>
                     <label className="field">
                       <span>Nome</span>
-                      <input value={courseDraft.name} onChange={(event) => setCourseDraft((current) => ({ ...current, name: event.target.value }))} />
+                      <input
+                        value={courseDraft.name}
+                        onChange={(event) =>
+                          setCourseDraft((current) => ({ ...current, name: event.target.value }))}
+                      />
                     </label>
                     <label className="field">
                       <span>Cor</span>
-                      <input value={courseDraft.color} onChange={(event) => setCourseDraft((current) => ({ ...current, color: event.target.value }))} />
+                      <input
+                        value={courseDraft.color}
+                        onChange={(event) =>
+                          setCourseDraft((current) => ({ ...current, color: event.target.value }))}
+                      />
                     </label>
                     <label className="field" style={{ gridColumn: "1 / -1" }}>
                       <span>Descricao</span>
-                      <textarea value={courseDraft.description} onChange={(event) => setCourseDraft((current) => ({ ...current, description: event.target.value }))} />
+                      <textarea
+                        value={courseDraft.description}
+                        onChange={(event) =>
+                          setCourseDraft((current) => ({ ...current, description: event.target.value }))}
+                      />
                     </label>
                     <button className="btn btn-primary" type="submit">Salvar curso</button>
                   </form>
@@ -265,6 +288,7 @@ export function AdminConsole({ initialTab = "overview" }) {
 }
 
 function CourseEditor({ course, session, mutate }) {
+  // Cada editor mantem um rascunho local para o usuario revisar antes de salvar.
   const [courseState, setCourseState] = useState(course);
   const [moduleDraft, setModuleDraft] = useState({ title: "" });
 
@@ -275,7 +299,11 @@ function CourseEditor({ course, session, mutate }) {
           <h2 className="panel-title">{courseState.name}</h2>
           {course.archivedAt ? <p className="muted tiny">Curso arquivado em {course.archivedAt}</p> : null}
         </div>
-        <button className="btn btn-danger" onClick={() => mutate(() => adminApi.deleteCourse(session.token, course.id), "Curso arquivado sem apagar o progresso.")}>
+        <button
+          className="btn btn-danger"
+          onClick={() =>
+            mutate(() => adminApi.deleteCourse(session.token, course.id), "Curso arquivado sem apagar o progresso.")}
+        >
           Arquivar curso
         </button>
       </div>
@@ -283,19 +311,34 @@ function CourseEditor({ course, session, mutate }) {
       <div className="grid grid-2">
         <label className="field">
           <span>Nome</span>
-          <input value={courseState.name} onChange={(event) => setCourseState((current) => ({ ...current, name: event.target.value }))} />
+          <input
+            value={courseState.name}
+            onChange={(event) =>
+              setCourseState((current) => ({ ...current, name: event.target.value }))}
+          />
         </label>
         <label className="field">
           <span>Cor</span>
-          <input value={courseState.color} onChange={(event) => setCourseState((current) => ({ ...current, color: event.target.value }))} />
+          <input
+            value={courseState.color}
+            onChange={(event) =>
+              setCourseState((current) => ({ ...current, color: event.target.value }))}
+          />
         </label>
         <label className="field" style={{ gridColumn: "1 / -1" }}>
           <span>Descricao</span>
-          <textarea value={courseState.description} onChange={(event) => setCourseState((current) => ({ ...current, description: event.target.value }))} />
+          <textarea
+            value={courseState.description}
+            onChange={(event) =>
+              setCourseState((current) => ({ ...current, description: event.target.value }))}
+          />
         </label>
       </div>
 
-      <button className="btn btn-primary" onClick={() => mutate(() => adminApi.updateCourse(session.token, course.id, courseState))}>
+      <button
+        className="btn btn-primary"
+        onClick={() => mutate(() => adminApi.updateCourse(session.token, course.id, courseState))}
+      >
         Atualizar curso
       </button>
 
@@ -303,9 +346,16 @@ function CourseEditor({ course, session, mutate }) {
         <h3 className="entity-title">Novo modulo</h3>
         <label className="field">
           <span>Titulo</span>
-          <input value={moduleDraft.title} onChange={(event) => setModuleDraft({ title: event.target.value })} />
+          <input
+            value={moduleDraft.title}
+            onChange={(event) => setModuleDraft({ title: event.target.value })}
+          />
         </label>
-        <button className="btn btn-secondary" onClick={() => mutate(() => adminApi.createModule(session.token, { courseId: course.id, title: moduleDraft.title }))}>
+        <button
+          className="btn btn-secondary"
+          onClick={() =>
+            mutate(() => adminApi.createModule(session.token, { courseId: course.id, title: moduleDraft.title }))}
+        >
           Criar modulo
         </button>
       </div>
@@ -320,6 +370,7 @@ function CourseEditor({ course, session, mutate }) {
 }
 
 function ModuleEditor({ module, session, mutate }) {
+  // Modulos agrupam licoes; alteracoes sao salvas apenas quando o botao e acionado.
   const [moduleState, setModuleState] = useState(module);
   const [lessonDraft, setLessonDraft] = useState({
     title: "",
@@ -333,7 +384,11 @@ function ModuleEditor({ module, session, mutate }) {
           <h3 className="entity-title">{moduleState.title}</h3>
           {module.archivedAt ? <p className="muted tiny">Modulo arquivado em {module.archivedAt}</p> : null}
         </div>
-        <button className="btn btn-danger" onClick={() => mutate(() => adminApi.deleteModule(session.token, module.id), "Modulo arquivado sem apagar progresso.")}>
+        <button
+          className="btn btn-danger"
+          onClick={() =>
+            mutate(() => adminApi.deleteModule(session.token, module.id), "Modulo arquivado sem apagar progresso.")}
+        >
           Arquivar modulo
         </button>
       </div>
@@ -341,15 +396,26 @@ function ModuleEditor({ module, session, mutate }) {
       <div className="grid grid-2">
         <label className="field">
           <span>Titulo</span>
-          <input value={moduleState.title} onChange={(event) => setModuleState((current) => ({ ...current, title: event.target.value }))} />
+          <input
+            value={moduleState.title}
+            onChange={(event) =>
+              setModuleState((current) => ({ ...current, title: event.target.value }))}
+          />
         </label>
         <label className="field">
           <span>Ordem</span>
-          <input value={moduleState.order} onChange={(event) => setModuleState((current) => ({ ...current, order: Number(event.target.value) }))} />
+          <input
+            value={moduleState.order}
+            onChange={(event) =>
+              setModuleState((current) => ({ ...current, order: Number(event.target.value) }))}
+          />
         </label>
       </div>
 
-      <button className="btn btn-secondary" onClick={() => mutate(() => adminApi.updateModule(session.token, module.id, moduleState))}>
+      <button
+        className="btn btn-secondary"
+        onClick={() => mutate(() => adminApi.updateModule(session.token, module.id, moduleState))}
+      >
         Atualizar modulo
       </button>
 
@@ -357,13 +423,25 @@ function ModuleEditor({ module, session, mutate }) {
         <h4 className="entity-title">Nova licao</h4>
         <label className="field">
           <span>Titulo</span>
-          <input value={lessonDraft.title} onChange={(event) => setLessonDraft((current) => ({ ...current, title: event.target.value }))} />
+          <input
+            value={lessonDraft.title}
+            onChange={(event) =>
+              setLessonDraft((current) => ({ ...current, title: event.target.value }))}
+          />
         </label>
         <label className="field">
           <span>Explicacao</span>
-          <textarea value={lessonDraft.explanation} onChange={(event) => setLessonDraft((current) => ({ ...current, explanation: event.target.value }))} />
+          <textarea
+            value={lessonDraft.explanation}
+            onChange={(event) =>
+              setLessonDraft((current) => ({ ...current, explanation: event.target.value }))}
+          />
         </label>
-        <button className="btn btn-secondary" onClick={() => mutate(() => adminApi.createLesson(session.token, { moduleId: module.id, ...lessonDraft }))}>
+        <button
+          className="btn btn-secondary"
+          onClick={() =>
+            mutate(() => adminApi.createLesson(session.token, { moduleId: module.id, ...lessonDraft }))}
+        >
           Criar licao
         </button>
       </div>
@@ -378,6 +456,7 @@ function ModuleEditor({ module, session, mutate }) {
 }
 
 function LessonEditor({ lesson, session, mutate }) {
+  // Licoes controlam requisito minimo, XP e tags que alimentam a revisao.
   const [lessonState, setLessonState] = useState({
     ...lesson,
     reviewTags: (lesson.reviewTags ?? []).join(", ")
@@ -397,7 +476,14 @@ function LessonEditor({ lesson, session, mutate }) {
           <h4 className="entity-title">{lesson.title}</h4>
           {lesson.archivedAt ? <p className="muted tiny">Licao arquivada em {lesson.archivedAt}</p> : null}
         </div>
-        <button className="btn btn-danger" onClick={() => mutate(() => adminApi.deleteLesson(session.token, lesson.id), "Licao arquivada sem apagar historico do aluno.")}>
+        <button
+          className="btn btn-danger"
+          onClick={() =>
+            mutate(
+              () => adminApi.deleteLesson(session.token, lesson.id),
+              "Licao arquivada sem apagar historico do aluno."
+            )}
+        >
           Arquivar licao
         </button>
       </div>
@@ -405,27 +491,51 @@ function LessonEditor({ lesson, session, mutate }) {
       <div className="grid grid-2">
         <label className="field">
           <span>Titulo</span>
-          <input value={lessonState.title} onChange={(event) => setLessonState((current) => ({ ...current, title: event.target.value }))} />
+          <input
+            value={lessonState.title}
+            onChange={(event) =>
+              setLessonState((current) => ({ ...current, title: event.target.value }))}
+          />
         </label>
         <label className="field">
           <span>Ordem</span>
-          <input value={lessonState.order} onChange={(event) => setLessonState((current) => ({ ...current, order: Number(event.target.value) }))} />
+          <input
+            value={lessonState.order}
+            onChange={(event) =>
+              setLessonState((current) => ({ ...current, order: Number(event.target.value) }))}
+          />
         </label>
         <label className="field">
           <span>Minimo de acertos</span>
-          <input value={lessonState.minCorrectAnswers} onChange={(event) => setLessonState((current) => ({ ...current, minCorrectAnswers: Number(event.target.value) }))} />
+          <input
+            value={lessonState.minCorrectAnswers}
+            onChange={(event) =>
+              setLessonState((current) => ({ ...current, minCorrectAnswers: Number(event.target.value) }))}
+          />
         </label>
         <label className="field">
           <span>XP</span>
-          <input value={lessonState.xpReward} onChange={(event) => setLessonState((current) => ({ ...current, xpReward: Number(event.target.value) }))} />
+          <input
+            value={lessonState.xpReward}
+            onChange={(event) =>
+              setLessonState((current) => ({ ...current, xpReward: Number(event.target.value) }))}
+          />
         </label>
         <label className="field" style={{ gridColumn: "1 / -1" }}>
           <span>Explicacao</span>
-          <textarea value={lessonState.explanation} onChange={(event) => setLessonState((current) => ({ ...current, explanation: event.target.value }))} />
+          <textarea
+            value={lessonState.explanation}
+            onChange={(event) =>
+              setLessonState((current) => ({ ...current, explanation: event.target.value }))}
+          />
         </label>
         <label className="field" style={{ gridColumn: "1 / -1" }}>
           <span>Tags de revisao</span>
-          <input value={lessonState.reviewTags} onChange={(event) => setLessonState((current) => ({ ...current, reviewTags: event.target.value }))} />
+          <input
+            value={lessonState.reviewTags}
+            onChange={(event) =>
+              setLessonState((current) => ({ ...current, reviewTags: event.target.value }))}
+          />
         </label>
       </div>
 
@@ -444,7 +554,11 @@ function LessonEditor({ lesson, session, mutate }) {
         <div className="grid grid-2">
           <label className="field">
             <span>Tipo</span>
-            <select value={exerciseDraft.type} onChange={(event) => setExerciseDraft((current) => ({ ...current, type: event.target.value }))}>
+            <select
+              value={exerciseDraft.type}
+              onChange={(event) =>
+                setExerciseDraft((current) => ({ ...current, type: event.target.value }))}
+            >
               <option value="multiple_choice">Multipla escolha</option>
               <option value="true_false">Verdadeiro/Falso</option>
               <option value="matching">Associacao</option>
@@ -454,19 +568,35 @@ function LessonEditor({ lesson, session, mutate }) {
           </label>
           <label className="field">
             <span>Resposta correta</span>
-            <input value={exerciseDraft.correctAnswer} onChange={(event) => setExerciseDraft((current) => ({ ...current, correctAnswer: event.target.value }))} />
+            <input
+              value={exerciseDraft.correctAnswer}
+              onChange={(event) =>
+                setExerciseDraft((current) => ({ ...current, correctAnswer: event.target.value }))}
+            />
           </label>
           <label className="field" style={{ gridColumn: "1 / -1" }}>
             <span>Pergunta</span>
-            <textarea value={exerciseDraft.prompt} onChange={(event) => setExerciseDraft((current) => ({ ...current, prompt: event.target.value }))} />
+            <textarea
+              value={exerciseDraft.prompt}
+              onChange={(event) =>
+                setExerciseDraft((current) => ({ ...current, prompt: event.target.value }))}
+            />
           </label>
           <label className="field" style={{ gridColumn: "1 / -1" }}>
             <span>Opcoes em JSON</span>
-            <textarea value={exerciseDraft.options} onChange={(event) => setExerciseDraft((current) => ({ ...current, options: event.target.value }))} />
+            <textarea
+              value={exerciseDraft.options}
+              onChange={(event) =>
+                setExerciseDraft((current) => ({ ...current, options: event.target.value }))}
+            />
           </label>
           <label className="field" style={{ gridColumn: "1 / -1" }}>
             <span>Explicacao</span>
-            <textarea value={exerciseDraft.explanation} onChange={(event) => setExerciseDraft((current) => ({ ...current, explanation: event.target.value }))} />
+            <textarea
+              value={exerciseDraft.explanation}
+              onChange={(event) =>
+                setExerciseDraft((current) => ({ ...current, explanation: event.target.value }))}
+            />
           </label>
         </div>
         <button
@@ -494,6 +624,7 @@ function LessonEditor({ lesson, session, mutate }) {
 }
 
 function ExerciseEditor({ exercise, session, mutate }) {
+  // Campos JSON permitem editar opcoes complexas sem criar formularios diferentes por tipo.
   const [exerciseState, setExerciseState] = useState({
     ...exercise,
     options: JSON.stringify(exercise.options),
@@ -507,25 +638,48 @@ function ExerciseEditor({ exercise, session, mutate }) {
           <strong>{exercise.type}</strong>
           {exercise.archivedAt ? <p className="muted tiny">Exercicio arquivado em {exercise.archivedAt}</p> : null}
         </div>
-        <button className="btn btn-danger" onClick={() => mutate(() => adminApi.deleteExercise(session.token, exercise.id), "Exercicio arquivado sem apagar desempenho.")}>
+        <button
+          className="btn btn-danger"
+          onClick={() =>
+            mutate(
+              () => adminApi.deleteExercise(session.token, exercise.id),
+              "Exercicio arquivado sem apagar desempenho."
+            )}
+        >
           Arquivar exercicio
         </button>
       </div>
       <label className="field">
         <span>Pergunta</span>
-        <textarea value={exerciseState.prompt} onChange={(event) => setExerciseState((current) => ({ ...current, prompt: event.target.value }))} />
+        <textarea
+          value={exerciseState.prompt}
+          onChange={(event) =>
+            setExerciseState((current) => ({ ...current, prompt: event.target.value }))}
+        />
       </label>
       <label className="field">
         <span>Opcoes em JSON</span>
-        <textarea value={exerciseState.options} onChange={(event) => setExerciseState((current) => ({ ...current, options: event.target.value }))} />
+        <textarea
+          value={exerciseState.options}
+          onChange={(event) =>
+            setExerciseState((current) => ({ ...current, options: event.target.value }))}
+        />
       </label>
       <label className="field">
         <span>Resposta correta em JSON</span>
-        <textarea value={exerciseState.correctAnswer} onChange={(event) => setExerciseState((current) => ({ ...current, correctAnswer: event.target.value }))} />
+        <textarea
+          value={exerciseState.correctAnswer}
+          onChange={(event) =>
+            setExerciseState((current) => ({ ...current, correctAnswer: event.target.value }))}
+        />
       </label>
       <label className="field">
         <span>Explicacao</span>
-        <textarea value={exerciseState.explanation} onChange={(event) => setExerciseState((current) => ({ ...current, explanation: event.target.value }))} />
+        <textarea
+          value={exerciseState.explanation}
+          onChange={(event) =>
+            setExerciseState((current) => ({ ...current, explanation: event.target.value }))}
+        />
       </label>
       <button
         className="btn btn-secondary"
