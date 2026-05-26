@@ -7,6 +7,7 @@ import { adminRouter } from "./routes/admin.js";
 const app = express();
 const PORT = process.env.PORT ?? 3333;
 
+// Middlewares globais: liberam acesso do mobile/admin e interpretam JSON do corpo.
 app.use(cors());
 app.use(express.json());
 
@@ -19,6 +20,7 @@ app.get("/health", (_request, response) => {
   });
 });
 
+// Cada grupo de rotas delega a regra de negocio para os services.
 app.use("/auth", authRouter);
 app.use("/", studentRouter);
 app.use("/admin", adminRouter);

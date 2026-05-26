@@ -15,6 +15,7 @@ const dynamoClient = STORE_DRIVER === "dynamodb"
   ? DynamoDBDocumentClient.from(new DynamoDBClient({}))
   : null;
 
+// Camada unica de persistencia: alterna entre JSON local e DynamoDB via STORE_DRIVER.
 export async function readDb() {
   if (STORE_DRIVER === "dynamodb") {
     return readDynamoDb();
@@ -34,6 +35,7 @@ export async function writeDb(data) {
 }
 
 export async function updateDb(updater) {
+  // Clona o estado para evitar mutacao acidental antes da escrita definitiva.
   const current = await readDb();
   const next = await updater(structuredClone(current));
   await writeDb(next);
@@ -57,6 +59,7 @@ async function readDynamoDb() {
     return result.Item.data;
   }
 
+  // Na primeira execucao em DynamoDB, reaproveita o JSON como seed academico.
   const seed = await readSeedDb();
   await writeDynamoDb(seed);
   return seed;

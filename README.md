@@ -69,6 +69,15 @@ O projeto foi estruturado como monorepo com tres frentes:
 
 ## Stack
 
+Resumo rapido das tecnologias usadas:
+
+- Monorepo com `npm workspaces` para manter mobile, admin, API e pacote compartilhado no mesmo repositorio.
+- Mobile em `Expo` + `React Native`, com `AsyncStorage` para progresso local e `Expo Notifications` para lembretes.
+- Web/admin em `Next.js` + `React`, consumindo a API por `fetch`.
+- Backend em `Node.js` + `Express`, com autenticacao via `JWT`.
+- Persistencia local em arquivo `JSON` para desenvolvimento, com opcao de `DynamoDB` na AWS.
+- Pacote `@duolingo-tech/shared` para catalogo dos cursos e regras de XP, streak, progresso, revisao e relatorios.
+
 ### Frontend mobile
 
 - Expo

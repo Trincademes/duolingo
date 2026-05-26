@@ -35,6 +35,7 @@ function confirmReset(onConfirm) {
   onConfirm();
 }
 
+// Mantem uma tela de erro legivel caso algum componente quebre em runtime.
 class AppErrorBoundary extends Component {
   constructor(props) {
     super(props);
@@ -65,6 +66,7 @@ class AppErrorBoundary extends Component {
 }
 
 function AppContent() {
+  // Estado principal do app: sessao, progresso local, navegacao e respostas da licao.
   const [appState, setAppState] = useState(INITIAL_STATE);
   const [authReady, setAuthReady] = useState(false);
   const [authForm, setAuthForm] = useState({ name: "", email: "", password: "" });
@@ -87,6 +89,7 @@ function AppContent() {
   }, []);
 
   useEffect(() => {
+    // Carrega o progresso salvo antes de mostrar login ou trilha.
     loadProgress()
       .then(setAppState)
       .catch(() => setAppState(INITIAL_STATE))
@@ -98,6 +101,7 @@ function AppContent() {
       return;
     }
 
+    // Persistencia local para o aluno continuar a trilha depois de fechar o app.
     saveProgress(appState).catch(() => {});
   }, [appState, authReady]);
 
@@ -130,6 +134,7 @@ function AppContent() {
     }
 
     try {
+      // O mesmo formulario alterna entre cadastro e login.
       const session = authMode === "register"
         ? await register({ name, email, password })
         : await login({ email, password });
@@ -158,6 +163,7 @@ function AppContent() {
       return;
     }
 
+    // Cada licao inicia com respostas/feedback zerados para evitar estado antigo.
     setActiveLessonId(lessonId);
     setCurrentIndex(0);
     setAnswers({});
@@ -225,6 +231,7 @@ function AppContent() {
     setFeedback(null);
 
     if (nextState.token) {
+      // O app funciona offline/localmente e sincroniza estatisticas quando a API responde.
       syncStats(nextState.token, nextState.user)
         .then((user) => {
           setAppState((current) => ({ ...current, user: { ...current.user, ...user } }));

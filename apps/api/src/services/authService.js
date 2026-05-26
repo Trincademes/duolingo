@@ -8,6 +8,7 @@ import { readDb, updateDb } from "./store.js";
 import { comparePassword, createToken, hashPassword } from "../utils/security.js";
 
 export async function registerUser({ name, email, password, role = "student" }) {
+  // Emails sao normalizados para impedir contas duplicadas por maiusculas/espacos.
   const normalizedEmail = email.trim().toLowerCase();
   const db = await readDb();
   const existing = db.users.find((user) => user.email === normalizedEmail);
@@ -61,6 +62,7 @@ export async function createRecoveryRequest({ email }) {
 
   const recoveryToken = crypto.randomUUID();
 
+  // Em ambiente academico o token retorna na resposta; em producao seria enviado por email.
   await updateDb((draft) => {
     draft.recoveryRequests.push({
       id: crypto.randomUUID(),
@@ -150,6 +152,7 @@ export async function syncUserStats(userId, payload) {
     const level = Number(payload.level);
     const streak = Number(payload.streak);
 
+    // A API aceita apenas numeros validos para impedir progresso corrompido.
     if (Number.isFinite(xp) && xp >= 0) {
       user.xp = Math.floor(xp);
     }
@@ -184,6 +187,7 @@ export async function findUserById(userId) {
 }
 
 export function sanitizeUser(user) {
+  // Nunca devolve o hash da senha para o mobile/admin.
   const { passwordHash, ...safeUser } = user;
   return hydrateUserState(safeUser);
 }
